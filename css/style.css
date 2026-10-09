@@ -1,18 +1,18 @@
-  /* Layout: a bright "rehearsal room" — mint paper, deep green ink, tangerine for the voice,
-     sun-yellow for game cards. One loud moment (the hero debate card); everything else quiet. */
+  /* Layout: "Dusk" — soft lavender paper, deep indigo ink, violet for the voice,
+     warm apricot for game cards. One loud moment (the hero debate card); everything else quiet. */
   :root {
-    --bg: #eaf3ef;
+    --bg: #f4f3fb;
     --surface: #ffffff;
-    --ink: #0f2e29;
-    --muted: #4c6a64;
-    --line: #c9dcd6;
-    --voice: #ff5e2e;
+    --ink: #1f2153;
+    --muted: #585b8a;
+    --line: #dcdcf0;
+    --voice: #6a4cf0;
     --on-voice: #ffffff;
-    --sun: #ffd447;
-    --on-sun: #0f2e29;
-    --deep: #0f2e29;
-    --on-deep: #eaf3ef;
-    --soft: #d7ebe4;
+    --sun: #ffc98b;
+    --on-sun: #1f2153;
+    --deep: #1f2153;
+    --on-deep: #f4f3fb;
+    --soft: #e8e5fb;
     --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
     --body: "Figtree", "Segoe UI", system-ui, sans-serif;
     --mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
@@ -22,34 +22,34 @@
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       color-scheme: dark;
-      --bg: #0b1f1b;
-      --surface: #132b26;
-      --ink: #e6f2ee;
-      --muted: #9dbab3;
-      --line: #24423b;
-      --voice: #ff7a52;
-      --on-voice: #1a0c06;
-      --sun: #ffd447;
-      --on-sun: #0f2e29;
-      --deep: #183731;
-      --on-deep: #e6f2ee;
-      --soft: #17332d;
+      --bg: #121330;
+      --surface: #1b1c42;
+      --ink: #eeedff;
+      --muted: #acabd6;
+      --line: #2e2f62;
+      --voice: #a593ff;
+      --on-voice: #151036;
+      --sun: #ffc98b;
+      --on-sun: #1f2153;
+      --deep: #1f2150;
+      --on-deep: #eeedff;
+      --soft: #24255a;
     }
   }
   :root[data-theme="dark"] {
     color-scheme: dark;
-    --bg: #0b1f1b;
-    --surface: #132b26;
-    --ink: #e6f2ee;
-    --muted: #9dbab3;
-    --line: #24423b;
-    --voice: #ff7a52;
-    --on-voice: #1a0c06;
-    --sun: #ffd447;
-    --on-sun: #0f2e29;
-    --deep: #183731;
-    --on-deep: #e6f2ee;
-    --soft: #17332d;
+    --bg: #121330;
+    --surface: #1b1c42;
+    --ink: #eeedff;
+    --muted: #acabd6;
+    --line: #2e2f62;
+    --voice: #a593ff;
+    --on-voice: #151036;
+    --sun: #ffc98b;
+    --on-sun: #1f2153;
+    --deep: #1f2150;
+    --on-deep: #eeedff;
+    --soft: #24255a;
   }
 
   * { box-sizing: border-box; }
@@ -453,7 +453,12 @@
   .creds b { display: block; font-size: 1.05rem; line-height: 1.3; }
   .creds span { display: block; font-size: 14.5px; color: var(--muted); }
 
-  /* ---------- Color palettes (picked with the palette button; default is mint) ---------- */
+  /* ---------- Color palettes (picked with the palette button; default is Dusk, in :root above) ---------- */
+  :root[data-palette="mint"] { --bg: #eaf3ef; --surface: #ffffff; --ink: #0f2e29; --muted: #4c6a64; --line: #c9dcd6; --voice: #ff5e2e; --on-voice: #ffffff; --sun: #ffd447; --on-sun: #0f2e29; --deep: #0f2e29; --on-deep: #eaf3ef; --soft: #d7ebe4; }
+  @media (prefers-color-scheme: dark) {
+    :root[data-palette="mint"]:not([data-theme="light"]) { color-scheme: dark; --bg: #0b1f1b; --surface: #132b26; --ink: #e6f2ee; --muted: #9dbab3; --line: #24423b; --voice: #ff7a52; --on-voice: #1a0c06; --sun: #ffd447; --on-sun: #0f2e29; --deep: #183731; --on-deep: #e6f2ee; --soft: #17332d; }
+  }
+  :root[data-palette="mint"][data-theme="dark"] { color-scheme: dark; --bg: #0b1f1b; --surface: #132b26; --ink: #e6f2ee; --muted: #9dbab3; --line: #24423b; --voice: #ff7a52; --on-voice: #1a0c06; --sun: #ffd447; --on-sun: #0f2e29; --deep: #183731; --on-deep: #e6f2ee; --soft: #17332d; }
   :root[data-palette="ocean"] { --bg: #eaf1fb; --surface: #ffffff; --ink: #0d2140; --muted: #4a5f80; --line: #c9d6ea; --voice: #2563eb; --on-voice: #ffffff; --sun: #ffcf3f; --on-sun: #0d2140; --deep: #0d2140; --on-deep: #eaf1fb; --soft: #d9e5f7; }
   @media (prefers-color-scheme: dark) {
     :root[data-palette="ocean"]:not([data-theme="light"]) { color-scheme: dark; --bg: #0a1428; --surface: #111f3a; --ink: #e6eefc; --muted: #9fb2d3; --line: #22345a; --voice: #6b9bff; --on-voice: #07112a; --sun: #ffcf3f; --on-sun: #0d2140; --deep: #14284d; --on-deep: #e6eefc; --soft: #16274a; }

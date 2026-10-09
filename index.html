@@ -486,7 +486,7 @@
 
   // Founder. Set name (and optionally photo, a path like "img/founder.jpg") to show them on the site.
   // CREDENTIALS is the list of certifications and achievements; add or remove lines freely.
-  const FOUNDER = { name: "", photo: "" };
+  const FOUNDER = { name: "Ethan Yin", photo: "" };
   const CREDENTIALS = [
     { title: "Founder of Future Voices", detail: "Created the program, the skill path and the activity playbook." },
     { title: "Top 100 Public Forum debater in the nation", detail: "Ranked among the top 100 Public Forum debaters in the United States." }
@@ -504,7 +504,7 @@
   const fname = FOUNDER.name.trim();
   if (fname) document.getElementById("founder-heading").textContent = `Meet ${fname}`;
   document.getElementById("founder-bio").textContent =
-    `Future Voices was founded by ${fname || "a Public Forum debater"} ranked among the top 100 in the nation. ` +
+    `Future Voices was founded by ${fname ? fname + ", a Public Forum debater" : "a Public Forum debater"} ranked among the top 100 in the nation. ` +
     "The program takes what competitive debate teaches, like clear arguments, careful listening and staying calm under pressure, " +
     "and turns it into games that welcome kids who are just getting started.";
   if (FOUNDER.photo) {

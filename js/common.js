@@ -27,16 +27,17 @@
   /* ---------- Color palettes ---------- */
   // The swatches show each palette's main colors. Their full light and dark values live in css/style.css.
   const PALETTES = [
+    { id: "dusk", name: "Dusk", colors: ["#1f2153", "#6a4cf0", "#ffc98b", "#f4f3fb"] },
     { id: "mint", name: "Mint", colors: ["#0f2e29", "#ff5e2e", "#ffd447", "#eaf3ef"] },
     { id: "ocean", name: "Ocean", colors: ["#0d2140", "#2563eb", "#ffcf3f", "#eaf1fb"] },
     { id: "grape", name: "Grape", colors: ["#2b1650", "#d93a72", "#ffc94a", "#f2eef9"] },
     { id: "classic", name: "Classic", colors: ["#141b33", "#c8102e", "#f2b705", "#f1f2f6"] }
   ];
   const applyPalette = id => {
-    if (!PALETTES.some(p => p.id === id) || id === "mint") delete root.dataset.palette;
+    if (!PALETTES.some(p => p.id === id) || id === "dusk") delete root.dataset.palette;
     else root.dataset.palette = id;
     document.querySelectorAll(".palette-menu [data-palette]").forEach(b =>
-      b.setAttribute("aria-checked", String(b.dataset.palette === (root.dataset.palette || "mint"))));
+      b.setAttribute("aria-checked", String(b.dataset.palette === (root.dataset.palette || "dusk"))));
   };
   applyPalette(read("fv-palette"));
 
@@ -67,7 +68,7 @@
     });
     document.addEventListener("click", e => { if (!wrap.contains(e.target)) setOpen(false); });
     document.addEventListener("keydown", e => { if (e.key === "Escape" && !menu.hidden) { setOpen(false); btn.focus(); } });
-    applyPalette(root.dataset.palette || "mint");
+    applyPalette(root.dataset.palette || "dusk");
   }
 
   /* ---------- Toasts ---------- */
