@@ -25,6 +25,7 @@
       <li><a href="#program">Program</a></li>
       <li><a href="#activities">Activities</a></li>
       <li><a href="#path">Skill path</a></li>
+      <li><a href="#founder">Founder</a></li>
       <li><a href="#chapters">Chapters</a></li>
       <li><a href="#faq">FAQ</a></li>
       <li><a href="toolkit.html">Lead toolkit</a></li>
@@ -54,6 +55,7 @@
           <span>Student-led chapters</span>
           <span>Games in every meeting</span>
           <span>Five-level skill path</span>
+          <span>Founded by a top-100 national debater</span>
         </div>
       </div>
 
@@ -136,7 +138,7 @@
       <div class="section-head">
         <p class="eyebrow">Activities</p>
         <h2 class="h2">The games we actually play</h2>
-        <p class="lede">Every activity takes less than 20 minutes, needs almost no materials and trains one skill on purpose. Chapter leads get the full playbook.</p>
+        <p class="lede">Every activity takes 15 minutes or less, needs almost no materials and trains one skill on purpose. Chapter leads get the full playbook.</p>
       </div>
       <div class="filters" role="group" aria-label="Filter activities by skill" id="filters">
         <button type="button" data-f="all" aria-pressed="true">All activities</button>
@@ -153,11 +155,11 @@
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow">A chapter meeting</p>
-        <h2 class="h2">What 60 minutes looks like</h2>
+        <h2 class="h2">What 45 minutes looks like</h2>
         <p class="lede">Chapters meet weekly or every other week. Each meeting follows the same rhythm so students know what's coming and can focus on getting better.</p>
       </div>
       <div class="meeting-bar" id="meeting-bar"></div>
-      <div class="scale" aria-hidden="true"><span>0 min</span><span>15</span><span>30</span><span>45</span><span>60</span></div>
+      <div class="scale" aria-hidden="true"><span>0 min</span><span>15</span><span>30</span><span>45</span></div>
       <div class="meeting-detail" id="meeting-detail"></div>
     </div>
   </section>
@@ -167,7 +169,7 @@
       <div class="section-head">
         <p class="eyebrow">The skill path</p>
         <h2 class="h2">Five levels from first words to full debate</h2>
-        <p class="lede">Students move up when they're ready, not by age. Each level ends with a challenge they complete in front of their chapter and a badge to show for it.</p>
+        <p class="lede">Students move up when they're ready, not by age. Each level ends with a challenge they complete in front of their chapter and a badge to show for it. Finish all five to earn a Future Voices certificate.</p>
       </div>
       <ol class="levels">
         <li class="level">
@@ -201,6 +203,24 @@
           <span class="badge">Challenge: speak or debate at the showcase</span>
         </li>
       </ol>
+    </div>
+  </section>
+
+  <section id="founder">
+    <div class="wrap founder">
+      <div class="founder-card" aria-hidden="true">
+        <div class="founder-photo" id="founder-photo">
+          <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="58" fill="var(--sun)" stroke="var(--on-deep)" stroke-width="3"/><rect x="47" y="26" width="26" height="44" rx="13" fill="var(--deep)"/><path d="M36 60a24 24 0 0 0 48 0M60 84v12M48 96h24" stroke="var(--deep)" stroke-width="6" fill="none" stroke-linecap="round"/></svg>
+        </div>
+        <span class="founder-tag">Founder</span>
+        <div class="rank"><b>Top 100</b><span>Public Forum debater<br>in the nation</span></div>
+      </div>
+      <div class="founder-copy">
+        <p class="eyebrow">Meet the founder</p>
+        <h2 class="h2" id="founder-heading">Started by a nationally ranked debater</h2>
+        <p class="lede" id="founder-bio"></p>
+        <ul class="creds" id="creds"></ul>
+      </div>
     </div>
   </section>
 
@@ -455,13 +475,21 @@
   ];
   const SKILL_LABEL = { confidence: "Confidence", speaking: "Public speaking", debate: "Debate" };
 
-  // A 60-minute meeting. Segments are drawn to scale by minutes.
+  // A 45-minute meeting. Segments are drawn to scale by minutes.
   const MEETING = [
-    { name: "Warm-up", mins: 8, cls: "s1", text: "Voice and body warm-ups, then a quick confidence game to get everyone talking." },
-    { name: "Skill lesson", mins: 12, cls: "s2", text: "A short lesson on one skill from the current level, with a live example." },
-    { name: "Game time", mins: 20, cls: "s3", text: "One or two activities that put the lesson into practice in pairs or teams." },
-    { name: "Spotlight", mins: 15, cls: "s4", text: "Volunteers give a speech or debate in front of the chapter and get feedback." },
+    { name: "Warm-up", mins: 5, cls: "s1", text: "Voice and body warm-ups, then a quick confidence game to get everyone talking." },
+    { name: "Skill lesson", mins: 10, cls: "s2", text: "A short lesson on one skill from the current level, with a live example." },
+    { name: "Game time", mins: 15, cls: "s3", text: "One or two activities that put the lesson into practice in pairs or teams." },
+    { name: "Spotlight", mins: 10, cls: "s4", text: "Volunteers give a speech or debate in front of the chapter and get feedback." },
     { name: "Shout-outs", mins: 5, cls: "s5", text: "Celebrate wins, hand out badges and preview next meeting's topic." }
+  ];
+
+  // Founder. Set name (and optionally photo, a path like "img/founder.jpg") to show them on the site.
+  // CREDENTIALS is the list of certifications and achievements; add or remove lines freely.
+  const FOUNDER = { name: "", photo: "" };
+  const CREDENTIALS = [
+    { title: "Founder of Future Voices", detail: "Created the program, the skill path and the activity playbook." },
+    { title: "Top 100 Public Forum debater in the nation", detail: "Ranked among the top 100 Public Forum debaters in the United States." }
   ];
 
   // Chapter directory. Add a chapter once it has held its first meeting, e.g.
@@ -471,6 +499,23 @@
   // To receive chapter applications, set FORM_ENDPOINT to a form service URL
   // (Formspree, a Google Apps Script web app, etc.). It receives a JSON POST.
   const FORM_ENDPOINT = "";
+
+  /* ---------- Founder ---------- */
+  const fname = FOUNDER.name.trim();
+  if (fname) document.getElementById("founder-heading").textContent = `Meet ${fname}`;
+  document.getElementById("founder-bio").textContent =
+    `Future Voices was founded by ${fname || "a Public Forum debater"} ranked among the top 100 in the nation. ` +
+    "The program takes what competitive debate teaches, like clear arguments, careful listening and staying calm under pressure, " +
+    "and turns it into games that welcome kids who are just getting started.";
+  if (FOUNDER.photo) {
+    const img = new Image();
+    img.src = FOUNDER.photo; img.alt = fname ? `Photo of ${fname}` : "Founder photo";
+    const box = document.getElementById("founder-photo");
+    box.replaceChildren(img); box.closest(".founder-card").removeAttribute("aria-hidden");
+  }
+  document.getElementById("creds").innerHTML = CREDENTIALS.map(c => `
+    <li><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="13" r="10" fill="var(--sun)" stroke="var(--ink)" stroke-width="2"/><path d="M10 21l-3 9 5-2 3 4 1-9M22 21l3 9-5-2-3 4-1-9" fill="var(--voice)" stroke="var(--ink)" stroke-width="2" stroke-linejoin="round"/><path d="M12 13l3 3 5-6" fill="none" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div><b>${c.title}</b><span>${c.detail}</span></div></li>`).join("");
 
   /* ---------- Ticker ---------- */
   const lines = [

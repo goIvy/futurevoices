@@ -22,11 +22,27 @@ to GitHub Pages through `.github/workflows/deploy.yml` (one-time setup: Settings
   speaking clock with optional sound cues (off by default).
 - **Program pillars**: confidence, public speaking, speech & debate.
 - **Activities**: 12 games, filterable by skill. Each card opens step-by-step instructions and a tip for leaders.
-- **A 60-minute chapter meeting**, drawn to scale.
-- **Five-level skill path**: Spark, Story, Stage, Spar, Showcase.
+- **A 45-minute chapter meeting**, drawn to scale.
+- **Five-level skill path**: Spark, Story, Stage, Spar, Showcase, ending in a Future Voices certificate.
+- **Meet the founder**: the founder's credentials (founder of Future Voices; top 100 Public Forum debater in the nation).
 - **Chapters**: roles, four steps to start one, a starter kit, an application form, and a chapter directory.
 - **FAQ**.
-- **Light/dark theme switch** in the nav, remembered per browser.
+- **Light/dark theme switch** and a **color palette picker** (Mint, Ocean, Grape, Classic) in the nav, remembered per browser.
+
+## Founder and credentials
+
+In `index.html`, near the top of the `<script>` block:
+
+- `FOUNDER.name`: your name. While it's empty the section reads "Started by a nationally ranked debater".
+- `FOUNDER.photo`: optional path to a photo you add to the repo, e.g. `img/founder.jpg`.
+- `CREDENTIALS`: the list of certifications and achievements. Add a line per item.
+
+## Colors
+
+The default palette is the bare `:root` block at the top of `css/style.css`. The other palettes are
+the `[data-palette="…"]` blocks further down, each with light and dark values. To change the
+default, edit the `:root` values (and the two dark blocks right under them). To add a palette, copy
+one palette's three blocks under a new name and add it to `PALETTES` in `js/common.js`.
 
 ## Chapter lead toolkit
 
