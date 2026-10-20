@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Chapter Lead Toolkit</title>
 <meta name="description" content="Future Voices chapter lead toolkit: keep your roster, take attendance and track each member's level on the skill path.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Cpath d='M4 6a4 4 0 0 1 4-4h18a4 4 0 0 1 4 4v14a4 4 0 0 1-4 4H14l-7 7v-7H8a4 4 0 0 1-4-4z' fill='%236a4cf0' stroke='%231f2153' stroke-width='2' stroke-linejoin='round'/%3E%3Cg stroke='%23fff' stroke-width='2.6' stroke-linecap='round'%3E%3Cpath d='M11 11v4M15 8.5v9M19 10v6M23 12v2'/%3E%3C/g%3E%3C/svg%3E">
+<meta name="theme-color" content="#f4f3fb" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121330" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Future Voices Chapter Lead Toolkit">
+<meta property="og:description" content="Keep your Future Voices chapter's roster, attendance and skill-path progress in one place.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Figtree:ital,wght@0,400;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap">
@@ -49,7 +55,7 @@
   .bar { display: flex; align-items: center; gap: 10px; min-width: 130px; }
   .bar i { flex: 1; height: 8px; border-radius: 99px; background: var(--soft); overflow: hidden; display: block; }
   .bar i b { display: block; height: 100%; background: var(--voice); border-radius: 99px; }
-  .linkish { background: none; border: 0; padding: 6px 8px; border-radius: 8px; font: 600 14px var(--body); color: var(--muted); cursor: pointer; }
+  .linkish { min-height: 40px; background: none; border: 0; padding: 6px 10px; border-radius: 8px; font: 600 14px var(--body); color: var(--muted); cursor: pointer; }
   .linkish:hover { color: var(--ink); background: var(--soft); }
   .linkish.danger { color: var(--voice); }
   .empty-row { text-align: center; color: var(--muted); padding: 32px 16px; }
@@ -98,6 +104,7 @@
 </style>
 </head>
 <body>
+<a class="skip" href="#main-content">Skip to content</a>
 
 <nav class="nav" aria-label="Main">
   <div class="wrap">
@@ -123,7 +130,7 @@
   </div>
 </nav>
 
-<main class="wrap">
+<main class="wrap" id="main-content">
   <header class="tk-head">
     <p class="eyebrow">For chapter leads and advisors</p>
     <h1>Run your chapter</h1>

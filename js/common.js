@@ -37,7 +37,7 @@
     if (!PALETTES.some(p => p.id === id) || id === "dusk") delete root.dataset.palette;
     else root.dataset.palette = id;
     document.querySelectorAll(".palette-menu [data-palette]").forEach(b =>
-      b.setAttribute("aria-checked", String(b.dataset.palette === (root.dataset.palette || "dusk"))));
+      b.setAttribute("aria-pressed", String(b.dataset.palette === (root.dataset.palette || "dusk"))));
   };
   applyPalette(read("fv-palette"));
 
@@ -49,14 +49,14 @@
       <button class="icon-btn" type="button" id="palette-btn" aria-label="Change colors" title="Change colors" aria-expanded="false" aria-controls="palette-menu">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.8-.8 1.8-1.8 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-1 .8-1.8 1.8-1.8H17a4 4 0 0 0 4-4c0-4.4-4-8-9-8z"/><circle cx="7.5" cy="11" r="1.2"/><circle cx="10.5" cy="7.2" r="1.2"/><circle cx="15" cy="7.5" r="1.2"/></svg>
       </button>
-      <div class="palette-menu" id="palette-menu" role="menu" aria-label="Color palette" hidden>
+      <div class="palette-menu" id="palette-menu" role="group" aria-label="Color palette" hidden>
         <p>Color palette</p>
-        ${PALETTES.map(p => `<button type="button" role="menuitemradio" data-palette="${p.id}">
+        ${PALETTES.map(p => `<button type="button" data-palette="${p.id}" aria-pressed="false">
           <span class="swatch" aria-hidden="true">${p.colors.map(c => `<i style="background:${c}"></i>`).join("")}</span>${p.name}</button>`).join("")}
       </div>`;
     end.prepend(wrap);
     const btn = wrap.querySelector("#palette-btn"), menu = wrap.querySelector("#palette-menu");
-    const setOpen = open => { menu.hidden = !open; btn.setAttribute("aria-expanded", String(open)); };
+    const setOpen = open => { menu.hidden = !open; btn.setAttribute("aria-expanded", String(open)); if (open) menu.querySelector('[aria-pressed="true"]')?.focus(); };
     btn.addEventListener("click", () => setOpen(menu.hidden));
     menu.addEventListener("click", e => {
       const b = e.target.closest("[data-palette]");
@@ -69,6 +69,68 @@
     document.addEventListener("click", e => { if (!wrap.contains(e.target)) setOpen(false); });
     document.addEventListener("keydown", e => { if (e.key === "Escape" && !menu.hidden) { setOpen(false); btn.focus(); } });
     applyPalette(root.dataset.palette || "dusk");
+  }
+
+  /* ---------- Mobile menu ---------- */
+  const nav = document.querySelector(".nav");
+  const links = nav?.querySelector("ul");
+  if (nav && links && end) {
+    const btn = document.createElement("button");
+    btn.className = "icon-btn menu-btn";
+    btn.type = "button";
+    btn.setAttribute("aria-label", "Menu");
+    btn.setAttribute("aria-expanded", "false");
+    btn.setAttribute("aria-controls", "mobile-menu");
+    btn.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true"><path class="bars" d="M4 7h16M4 12h16M4 17h16"/><path class="x" d="M6 6l12 12M18 6L6 18"/></svg>`;
+    const panel = document.createElement("div");
+    panel.className = "mobile-menu";
+    panel.id = "mobile-menu";
+    panel.hidden = true;
+    panel.appendChild(links.cloneNode(true));
+    nav.style.position = "sticky";
+    nav.appendChild(panel);
+    end.appendChild(btn);
+    const setMenu = open => { panel.hidden = !open; btn.setAttribute("aria-expanded", String(open)); };
+    btn.addEventListener("click", () => setMenu(panel.hidden));
+    panel.addEventListener("click", e => { if (e.target.closest("a")) setMenu(false); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && !panel.hidden) { setMenu(false); btn.focus(); } });
+    document.addEventListener("click", e => { if (!nav.contains(e.target)) setMenu(false); });
+  }
+
+  /* ---------- Highlight the section in view ---------- */
+  const navLinks = [...document.querySelectorAll('.nav a[href^="#"]')].filter(a => a.getAttribute("href").length > 1);
+  const targets = [...new Set(navLinks.map(a => a.getAttribute("href")))].map(h => document.querySelector(h)).filter(Boolean);
+  if (targets.length && "IntersectionObserver" in window) {
+    const spy = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (!en.isIntersecting) return;
+        navLinks.forEach(a => a.setAttribute("aria-current", String(a.getAttribute("href") === "#" + en.target.id)));
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    targets.forEach(t => spy.observe(t));
+  }
+
+  /* ---------- Gentle reveal below the fold ---------- */
+  // Only content that starts off-screen is hidden, so the first view is always complete.
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches && "IntersectionObserver" in window) {
+    const items = document.querySelectorAll(".section-head, .pillar, .game, .seg, .meeting-detail > div, .level, .role, .creds li, .steps li, .kit, .form-card, .faq details, .col, .stat");
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (!en.isIntersecting) return;
+        const el = en.target;
+        el.classList.add("rv-in");
+        el.classList.remove("rv");
+        io.unobserve(el);
+        setTimeout(() => { el.classList.remove("rv-in"); el.style.transitionDelay = ""; }, 900);
+      });
+    }, { rootMargin: "0px 0px -8% 0px" });
+    items.forEach(el => {
+      if (el.getBoundingClientRect().top < innerHeight) return;
+      const sibs = [...el.parentElement.children];
+      el.style.transitionDelay = Math.min(sibs.indexOf(el), 5) * 60 + "ms";
+      el.classList.add("rv");
+      io.observe(el);
+    });
   }
 
   /* ---------- Toasts ---------- */

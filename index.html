@@ -5,12 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Future Voices</title>
 <meta name="description" content="Future Voices is a Feed the Monster program that helps young people build confidence, speak in public and learn speech and debate through fun, hands-on activities. Start a chapter in your school or community.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Cpath d='M4 6a4 4 0 0 1 4-4h18a4 4 0 0 1 4 4v14a4 4 0 0 1-4 4H14l-7 7v-7H8a4 4 0 0 1-4-4z' fill='%236a4cf0' stroke='%231f2153' stroke-width='2' stroke-linejoin='round'/%3E%3Cg stroke='%23fff' stroke-width='2.6' stroke-linecap='round'%3E%3Cpath d='M11 11v4M15 8.5v9M19 10v6M23 12v2'/%3E%3C/g%3E%3C/svg%3E">
+<meta name="theme-color" content="#f4f3fb" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121330" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Future Voices">
+<meta property="og:description" content="A Feed the Monster program that helps young people build confidence, speak in public and learn speech and debate through fun, hands-on activities.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Figtree:ital,wght@0,400;0,600;0,700;1,400&family=DM+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<a class="skip" href="#main-content">Skip to content</a>
 
 <nav class="nav" aria-label="Main">
   <div class="wrap">
@@ -41,6 +48,7 @@
 </nav>
 
 <main id="top">
+<span id="main-content"></span>
   <header class="hero">
     <div class="wrap hero-grid">
       <div>
@@ -55,8 +63,12 @@
           <span>Student-led chapters</span>
           <span>Games in every meeting</span>
           <span>Five-level skill path</span>
-          <span>Founded by a top-100 national debater</span>
         </div>
+        <a class="founder-chip" href="#founder">
+          <span class="chip-avatar" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="8.5" y="3" width="7" height="12" rx="3.5"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg></span>
+          <span><b>Founded by Ethan Yin</b><small>Top 100 Public Forum debater in the nation</small></span>
+          <span class="chip-arrow" aria-hidden="true">→</span>
+        </a>
       </div>
 
       <div>
@@ -286,12 +298,12 @@
               </div>
             </fieldset>
             <div class="two">
-              <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" autocomplete="name" required></div>
-              <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+              <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" autocomplete="name" aria-describedby="f-name-err" required><p class="field-error" id="f-name-err" hidden>Add your name.</p></div>
+              <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" aria-describedby="f-email-err" required><p class="field-error" id="f-email-err" hidden>Add an email address like name@school.org.</p></div>
             </div>
             <div class="two">
-              <div class="field"><label for="f-org">School or organization</label><input id="f-org" name="organization" required></div>
-              <div class="field"><label for="f-city">City and state or country</label><input id="f-city" name="location" autocomplete="address-level2" required></div>
+              <div class="field"><label for="f-org">School or organization</label><input id="f-org" name="organization" aria-describedby="f-org-err" required><p class="field-error" id="f-org-err" hidden>Add your school or organization.</p></div>
+              <div class="field"><label for="f-city">City and state or country</label><input id="f-city" name="location" autocomplete="address-level2" aria-describedby="f-city-err" required><p class="field-error" id="f-city-err" hidden>Add your city.</p></div>
             </div>
             <div class="field">
               <label for="f-ages">Who would join?</label>
@@ -306,7 +318,7 @@
               <label for="f-why">Why do you want a chapter? <span class="opt">(optional)</span></label>
               <textarea id="f-why" name="why" rows="3" placeholder="Lots of kids at my school are scared to present in class."></textarea>
             </div>
-            <p class="error" id="form-error" hidden></p>
+            <p class="error" id="form-error" role="alert" hidden></p>
             <button class="btn voice" type="submit" id="submit">Send application</button>
             <div class="done" id="form-done" hidden aria-live="polite"></div>
           </form>
@@ -683,14 +695,24 @@
     e.preventDefault();
     err.hidden = true;
     const data = Object.fromEntries(new FormData(form));
-    const missing = [];
-    if (!data.name.trim()) missing.push("your name");
-    if (!/^\S+@\S+\.\S+$/.test(data.email.trim())) missing.push("a valid email");
-    if (!data.organization.trim()) missing.push("your school or organization");
-    if (!data.location.trim()) missing.push("your city");
-    if (missing.length) {
-      err.textContent = `Please add ${missing.join(", ")}.`;
+    const checks = [
+      ["f-name", data.name.trim()],
+      ["f-email", /^\S+@\S+\.\S+$/.test(data.email.trim())],
+      ["f-org", data.organization.trim()],
+      ["f-city", data.location.trim()]
+    ];
+    let firstBad = null;
+    checks.forEach(([id, ok]) => {
+      const input = document.getElementById(id);
+      input.setAttribute("aria-invalid", String(!ok));
+      document.getElementById(id + "-err").hidden = !!ok;
+      if (!ok && !firstBad) firstBad = input;
+    });
+    if (firstBad) {
+      const n = checks.filter(c => !c[1]).length;
+      err.textContent = n === 1 ? "One field needs fixing before you can send." : `${n} fields need fixing before you can send.`;
       err.hidden = false;
+      firstBad.focus();
       return;
     }
     const first = data.name.trim().split(/\s+/)[0];

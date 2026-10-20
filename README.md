@@ -27,6 +27,9 @@ to GitHub Pages through `.github/workflows/deploy.yml` (one-time setup: Settings
 - **Meet the founder**: the founder's credentials (founder of Future Voices; top 100 Public Forum debater in the nation).
 - **Chapters**: roles, four steps to start one, a starter kit, an application form, and a chapter directory.
 - **FAQ**.
+- **Accessibility and polish**: mobile menu, a "skip to content" link, active-section highlighting in the
+  nav, inline form errors that move focus to the first field to fix, gentle fade-ins (off when the
+  visitor prefers reduced motion), a favicon, and link-preview tags for sharing.
 - **Light/dark theme switch** and a **color palette picker** (Dusk, Mint, Ocean, Grape, Classic) in the nav, remembered per browser.
 
 ## Founder and credentials
